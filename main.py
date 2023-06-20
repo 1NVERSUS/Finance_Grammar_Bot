@@ -14,7 +14,7 @@ def start(message):
 @bot.message_handler(commands=['income'])
 def income_handler(message):
     f = open('income.txt', 'w')
-    f.write(message)306
+    f.write(message)
 
 
 bot.infinity_polling()
