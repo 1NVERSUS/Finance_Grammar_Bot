@@ -1,8 +1,10 @@
 import telebot
 from telebot import types
+from datetime import date
 token='6108360249:AAHC6BHyPpZtcEHLA7Lf4b3v3-WX8cqeP7g'
 bot = telebot.TeleBot(token)
-inc = []
+a = []
+
 
 @bot.message_handler(commands=['start'])
 def start(message):
@@ -10,6 +12,7 @@ def start(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     bt1 = types.KeyboardButton('income')
     markup.add(bt1)
+    print(message)
 
 @bot.message_handler(commands=['income'])
 def income_handler(message):
@@ -37,5 +40,12 @@ def consumption(message):
         d.write(x)
     d.close()
 
-
+if int(date.today().day) == 20:
+    d = open('consumption.txt', 'r+')
+    for line in d:
+        x = str(int(line))
+    f = open('income.txt', 'r+')
+    for line in f:
+        y = str(int(line))
+    bot.send_message(message.chat.id,'AAAAAAAAAAAAAAAAAAAAAA')
 bot.infinity_polling()
