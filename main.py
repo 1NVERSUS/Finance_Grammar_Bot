@@ -2,7 +2,7 @@ import telebot
 from telebot import types
 token='6108360249:AAHC6BHyPpZtcEHLA7Lf4b3v3-WX8cqeP7g'
 bot = telebot.TeleBot(token)
-
+inc = []
 
 @bot.message_handler(commands=['start'])
 def start(message):
@@ -13,8 +13,7 @@ def start(message):
 
 @bot.message_handler(commands=['income'])
 def income_handler(message):
-    f = open('income.txt', 'w')
-    f.write(message)
-
-
-bot.infinity_polling()
+    bot.send_message(message.chat.id, 'Напиши сумму, которую ты заработал')
+    bot.register_next_step_handler(message, income)
+def income(message):
+    print(message.json()['text'])
