@@ -75,7 +75,8 @@ def dream(message):
     global sum
     idt = message.from_user.id
     if idt not in m:
-        incom = 0
+        
+        k[idt] = [sum, tme]
         consum = 0
         m[idt] = incom
         n[idt] = consum
@@ -84,6 +85,11 @@ def dream2(message):
     bot.send_message(message.chat.id, 'За какой срок вы хотите накопить сумму?')
     bot.register_next_step_handler(message.chat.id, dream3)
     tme = int(message.text)
+    idt = message.from_user.id
+     if idt not in k:
+        global k
+        k[idt] = [sum, tme]
+        print(k)
     
 
 def dream3(message):
