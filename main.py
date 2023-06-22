@@ -6,6 +6,8 @@ import time
 import sche
 from celery import Celery
 from celery.schedules import crontab
+
+from models import Person, Notifications
 token='6108360249:AAHC6BHyPpZtcEHLA7Lf4b3v3-WX8cqeP7g'
 bot = telebot.TeleBot(token)
 
