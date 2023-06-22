@@ -112,20 +112,25 @@ def show(message):
         Инвестиции это риск,поэтому вам решать, пробовать ли себя в этом направлении или нет. ''')
     if ((m[idt] - n[idt])/m[idt])*100 > 20:
         _____('''У вас весьма большой доход. Надеюсь вы сможете продолжать в том же духе и исполните свои мечты!
-@celery_app.task
+
 def send_message():
-    now = datetime.now()
-    # Отправляем сообщение каждого 10-го числа месяца в 12:00
-    if now.day == 22 and now.hour == 10:
+    for person in Person.select():
+        last_sent_date = Notifications.select().where(
+            Notifications.id == person.telegram_id).order_by(
+            Notifications.last_notification.desc())[0].last_notification
+        print(last_sent_date)
+
+        if last_sent_date:
         message = "Hello, it's time to send the monthly report!"
-        bot.send_message(CHAT_ID, message)
+        
+        Notifications.create(id=person.telegram_id, last_notification=datetime.datetime.now())
 if __name__ == '__main__':
-    # Запускаем Celery
-    celery_app.start()
+    bot.infinity_polling()
+  
 
 '''
 0 10 * * * /path/to/venv/bin/celery -A main send_message
 '''
 
 
-bot.infinity_polling()
+
