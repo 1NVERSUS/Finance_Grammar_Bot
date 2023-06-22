@@ -120,11 +120,11 @@ def send_message():
         last_sent_date = Notifications.select().where(
             Notifications.id == person.telegram_id).order_by(
             Notifications.last_notification.desc())[0].last_notification
-        print(last_sent_date)
 
         if last_sent_date:
-        message = "Hello, it's time to send the monthly report!"
-        
+            message = "Hello, it's time to send the monthly report!"
+            Notifications.create(id=person.telegram_id, last_notification=datetime.datetime.now())
+        print(bot.send_message(person.telegram_id, message))
         Notifications.create(id=person.telegram_id, last_notification=datetime.datetime.now())
 if __name__ == '__main__':
     bot.infinity_polling()
